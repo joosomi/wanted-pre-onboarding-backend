@@ -1,4 +1,9 @@
 const Job = require('../models/job');
+const {
+    sendSuccessResponse,
+    sendCreatedResponse,
+    sendNoContentResponse,
+} = require('../utils/responseHandler');
 
 exports.createJob = async (req, res) => {
     try {
@@ -10,7 +15,7 @@ exports.createJob = async (req, res) => {
             description: description,
             skills: skills,
         });
-        res.status(201).json(job);
+        sendCreatedResponse(res, job, '채용공고 등록 완료');
     } catch (error) {
         next(error);
     }
@@ -33,7 +38,23 @@ exports.updateJob = async (req, res) => {
 
         await job.save();
 
-        res.status(200).json(job);
+        sendSuccessResponse(res, job, '채용공고 수정 완료');
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.deleteJob = async (req, res, next) => {
+    try {
+        const job = await Job.findByPk(req.params.id);
+
+        if (!job) {
+            res.status(404);
+            return next(new Error('Job not found'));
+        }
+
+        await job.destroy();
+        sendNoContentResponse(res, '채용 공고 삭제 완료');
     } catch (error) {
         next(error);
     }
