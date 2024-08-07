@@ -1,7 +1,9 @@
 const express = require('express');
-const { sequelize } = require('./models'); // models/index.js에서 sequelize를 가져옴
 const companyRoutes = require('./routes/companyRoutes');
 const jobRoutes = require('./routes/jobRoutes');
+const applicationRoutes = require('./routes/applicationRoutes');
+const userRoutes = require('./routes/userRoutes');
+const { sequelize } = require('./models');
 const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -11,6 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/companies', companyRoutes);
 app.use('/jobs', jobRoutes);
+app.use('/applications', applicationRoutes);
+app.use('/users', userRoutes);
 
 app.use(errorHandler);
 

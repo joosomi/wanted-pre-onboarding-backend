@@ -28,6 +28,12 @@ Application.init(
         sequelize,
         modelName: 'Application',
         tableName: 'Application',
+        indexes: [
+            {
+                unique: true,
+                fields: ['userId', 'jobId'], // userId와 jobId의 조합이 유일해야 함 -> 동일 채용 공고 중복 지원 방지
+            },
+        ],
     }
 );
 

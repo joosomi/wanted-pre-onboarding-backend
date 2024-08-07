@@ -6,6 +6,22 @@ class NotFoundError extends Error {
     }
 }
 
+class BadRequestError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'BadRequestError';
+        this.statusCode = 400;
+    }
+}
+
+class InternalServerError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'InternalServerError';
+        this.statusCode = 500;
+    }
+}
+
 const errorHandler = (err, req, res, next) => {
     const statusCode =
         err.statusCode || res.statusCode !== 200 ? res.statusCode : 500;
@@ -17,4 +33,9 @@ const errorHandler = (err, req, res, next) => {
     });
 };
 
-module.exports = { errorHandler, NotFoundError };
+module.exports = {
+    errorHandler,
+    NotFoundError,
+    BadRequestError,
+    InternalServerError,
+};
