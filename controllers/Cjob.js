@@ -121,3 +121,55 @@ exports.getJobs = async (req, res, next) => {
         next(error);
     }
 };
+
+// 채용 상세 페이지 조회
+exports.getJobDetail = async (req, res, next) => {
+    try {
+        const jobId = req.params.id;
+
+        // 채용 공고 상세 정보 조회
+        const job = await Job.findOne({
+            where: { id: jobId },
+            include: [
+                {
+                    model: Company,
+                    attributes: ['name', 'country', 'location'],
+                },
+            ],
+        });
+
+        if (!job) {
+            return res
+                .status(404)
+                .json({ error: '채용공고를 찾을 수 없습니다.' });
+        }
+
+        // 해당 회사 다른 채용 공고 조회
+        const otherJobs = await Job.findAll({
+            where: {
+                companyId: job.companyId,
+                id: { [Op.ne]: jobId }, // 현재 채용 공고를 제외
+            },
+            attributes: ['id'], // 다른 채용 공고의 ID만
+        });
+
+        const otherJobIds = otherJobs.map((otherJob) => otherJob.id);
+
+        // 응답 데이터 구성
+        const jobDetail = {
+            job_id: job.id,
+            company_name: job.Company.name,
+            country: job.Company.country,
+            location: job.Company.location,
+            position: job.position,
+            reward: job.reward,
+            skills: job.skills,
+            description: job.description, // Assuming description contains the job details
+            otherJobs: otherJobIds, // 다른 채용 공고 ID 리스트
+        };
+
+        sendSuccessResponse(res, jobDetail, '채용공고 상세 페이지 조회 완료');
+    } catch (error) {
+        next(error);
+    }
+};
