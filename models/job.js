@@ -34,6 +34,7 @@ Job.init(
     {
         sequelize,
         modelName: 'Job',
+        tableName: 'Job',
     }
 );
 

@@ -27,6 +27,7 @@ Application.init(
     {
         sequelize,
         modelName: 'Application',
+        tableName: 'Application',
     }
 );
 

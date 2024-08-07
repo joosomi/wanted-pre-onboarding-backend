@@ -15,6 +15,7 @@ app.use(errorHandler);
 
 sequelize
     .sync()
+    // .sync({ force: true }) // 데이터베이스를 초기화 (모든 테이블 삭제 후 다시 생성)
     .then(() => {
         const port = process.env.PORT || 3000;
         app.listen(port, () => {

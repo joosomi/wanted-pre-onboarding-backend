@@ -22,6 +22,7 @@ Company.init(
     {
         sequelize,
         modelName: 'Company',
+        tableName: 'Company',
     }
 );
 
