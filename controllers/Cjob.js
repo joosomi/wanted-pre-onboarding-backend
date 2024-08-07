@@ -12,7 +12,7 @@ exports.createJob = async (req, res) => {
         });
         res.status(201).json(job);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        next(error);
     }
 };
 
@@ -35,39 +35,6 @@ exports.updateJob = async (req, res) => {
 
         res.status(200).json(job);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        next(error);
     }
 };
-
-// exports.getJobs = async (req, res) => {
-//     try {
-//         const jobs = await Job.findAll({
-//             include: [{
-//                 model: Company,
-//                 attributes: ['name', 'country', 'location']
-//             }]
-//         });
-//         res.status(200).json(jobs);
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// };
-
-// exports.getJobById = async (req, res) => {
-//     try {
-//         const job = await Job.findByPk(req.params.id, {
-//             include: [{
-//                 model: Company,
-//                 attributes: ['name', 'country', 'location']
-//             }]
-//         });
-
-//         if (!job) {
-//             return res.status(404).json({ error: 'Job not found' });
-//         }
-
-//         res.status(200).json(job);
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// };
