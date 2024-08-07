@@ -1,32 +1,32 @@
 {
-  "name": "wanted-pre-onboarding-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joosomi/wanted-pre-onboarding-backend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/joosomi/wanted-pre-onboarding-backend/issues"
-  },
-  "homepage": "https://github.com/joosomi/wanted-pre-onboarding-backend#readme",
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0",
-    "nodemon": "^3.1.4",
-    "supertest": "^7.0.0"
-  }
+    "name": "wanted-pre-onboarding-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/joosomi/wanted-pre-onboarding-backend.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/joosomi/wanted-pre-onboarding-backend/issues"
+    },
+    "homepage": "https://github.com/joosomi/wanted-pre-onboarding-backend#readme",
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "sequelize": "^6.37.3",
+        "sqlite3": "^5.1.7"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "nodemon": "^3.1.4",
+        "supertest": "^7.0.0"
+    }
 }

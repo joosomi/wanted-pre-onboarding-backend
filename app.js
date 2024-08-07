@@ -18,15 +18,23 @@ app.use('/users', userRoutes);
 
 app.use(errorHandler);
 
-sequelize
-    .sync()
-    // .sync({ force: true }) // 데이터베이스를 초기화 (모든 테이블 삭제 후 다시 생성)
-    .then(() => {
+const startServer = async () => {
+    try {
+        await sequelize.sync();
+        // await sequelize.sync({ force: true }); // 데이터베이스를 초기화 (모든 테이블 삭제 후 다시 생성)
         const port = process.env.PORT || 3000;
-        app.listen(port, () => {
+        const server = app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });
-    })
-    .catch((error) => {
+        return server;
+    } catch (error) {
         console.error('Unable to connect to the database:', error);
-    });
+        throw error;
+    }
+};
+
+if (require.main === module) {
+    startServer();
+}
+
+module.exports = { app, startServer };

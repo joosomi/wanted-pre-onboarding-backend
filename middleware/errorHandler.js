@@ -23,8 +23,7 @@ class InternalServerError extends Error {
 }
 
 const errorHandler = (err, req, res, next) => {
-    const statusCode =
-        err.statusCode || res.statusCode !== 200 ? res.statusCode : 500;
+    const statusCode = err.statusCode || 500; // 기본값을 500으로 설정
     res.status(statusCode);
     res.json({
         message: err.message,
