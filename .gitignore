@@ -30,3 +30,8 @@ node_modules/
 # IDE specific files
 .vscode/
 .idea/
+
+# SQLite database files
+*.sqlite
+*.sqlite3
+*.db

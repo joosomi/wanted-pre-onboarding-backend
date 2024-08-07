@@ -6,6 +6,7 @@ const {
     sendCreatedResponse,
     sendNoContentResponse,
 } = require('../utils/responseHandler');
+const { NotFoundError } = require('../middleware/errorHandler');
 
 exports.createJob = async (req, res) => {
     try {
@@ -23,15 +24,13 @@ exports.createJob = async (req, res) => {
     }
 };
 
-exports.updateJob = async (req, res) => {
+exports.updateJob = async (req, res, next) => {
     try {
         const { position, reward, description, skills } = req.body;
         const job = await Job.findByPk(req.params.id);
 
         if (!job) {
-            return res
-                .status(404)
-                .json({ error: '채용공고를 찾을 수 없습니다.' });
+            throw new NotFoundError('채용공고를 찾을 수 없습니다.');
         }
 
         // 채용 공고에서 수정된 값이 있을 경우 수정
@@ -53,8 +52,7 @@ exports.deleteJob = async (req, res, next) => {
         const job = await Job.findByPk(req.params.id);
 
         if (!job) {
-            res.status(404);
-            return next(new Error('채용공고를 찾을 수 없습니다.'));
+            throw new NotFoundError('채용공고를 찾을 수 없습니다.');
         }
 
         await job.destroy();
@@ -68,7 +66,6 @@ exports.getJobs = async (req, res, next) => {
     try {
         // 검색 - 쿼리 파라미터 가져오기
         const { search } = req.query;
-        // console.log('Search query received:', search);
 
         // 검색 옵션
         let searchOptions = {
@@ -106,6 +103,10 @@ exports.getJobs = async (req, res, next) => {
         // 검색 쿼리 실행
         const jobs = await Job.findAll(searchOptions);
 
+        if (jobs.length === 0) {
+            return sendSuccessResponse(res, [], '검색 결과가 없습니다.');
+        }
+
         const jobList = jobs.map((job) => ({
             job_id: job.id,
             company_name: job.Company.name,
@@ -139,9 +140,7 @@ exports.getJobDetail = async (req, res, next) => {
         });
 
         if (!job) {
-            return res
-                .status(404)
-                .json({ error: '채용공고를 찾을 수 없습니다.' });
+            throw new NotFoundError('채용공고를 찾을 수 없습니다.');
         }
 
         // 해당 회사 다른 채용 공고 조회
@@ -155,7 +154,6 @@ exports.getJobDetail = async (req, res, next) => {
 
         const otherJobIds = otherJobs.map((otherJob) => otherJob.id);
 
-        // 응답 데이터 구성
         const jobDetail = {
             job_id: job.id,
             company_name: job.Company.name,
@@ -164,7 +162,7 @@ exports.getJobDetail = async (req, res, next) => {
             position: job.position,
             reward: job.reward,
             skills: job.skills,
-            description: job.description, // Assuming description contains the job details
+            description: job.description,
             otherJobs: otherJobIds, // 다른 채용 공고 ID 리스트
         };
 

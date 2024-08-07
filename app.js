@@ -2,7 +2,7 @@ const express = require('express');
 const { sequelize } = require('./models'); // models/index.js에서 sequelize를 가져옴
 const companyRoutes = require('./routes/companyRoutes');
 const jobRoutes = require('./routes/jobRoutes');
-const errorHandler = require('./middleware/errorHandler');
+const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 
