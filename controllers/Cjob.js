@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Job = require('../models/job');
 const Company = require('../models/company');
 const {
@@ -65,14 +66,45 @@ exports.deleteJob = async (req, res, next) => {
 
 exports.getJobs = async (req, res, next) => {
     try {
-        const jobs = await Job.findAll({
+        // 검색 - 쿼리 파라미터 가져오기
+        const { search } = req.query;
+        // console.log('Search query received:', search);
+
+        // 검색 옵션
+        let searchOptions = {
             include: [
                 {
                     model: Company,
                     attributes: ['name', 'country', 'location'],
                 },
             ],
-        });
+        };
+
+        // 검색 - 회사 이름, position, skills에서만
+        if (search) {
+            searchOptions.where = {
+                [Op.or]: [
+                    {
+                        '$Company.name$': {
+                            [Op.like]: `%${search}%`,
+                        },
+                    },
+                    {
+                        position: {
+                            [Op.like]: `%${search}%`,
+                        },
+                    },
+                    {
+                        skills: {
+                            [Op.like]: `%${search}%`,
+                        },
+                    },
+                ],
+            };
+        }
+
+        // 검색 쿼리 실행
+        const jobs = await Job.findAll(searchOptions);
 
         const jobList = jobs.map((job) => ({
             job_id: job.id,
