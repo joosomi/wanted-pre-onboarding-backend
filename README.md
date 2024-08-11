@@ -1,5 +1,5 @@
 ## 채용 웹 서비스를 위한 API 서버
-*기술 스택 : Node.js, Express, SQLite*
+*기술 스택 : Node.js, Express, SQLite, Sequelize*
 - SQLite는 서버리스, 경량화, 간편한 설정으로 소규모 애플리케이션에 최적화된 RDBMS라 이를 선택했습니다.
 
 ### 기능 
@@ -11,7 +11,7 @@
 등록된 채용 공고를 삭제할 수 있습니다.
 4.	채용공고 목록 조회
 사용자는 채용 공고 목록을 조회할 수 있습니다.
-회사명, 포지션, 사용 기술 등으로 검색할 수 있습니다.
+회사명, 포지션, 사용 기술을 키워드로 검색할 수 있습니다.
 5.	채용 상세 페이지 조회
 사용자는 특정 채용 공고의 상세 정보를 조회할 수 있습니다.
 해당 회사의 다른 채용 공고도 함께 조회할 수 있습니다.
@@ -67,6 +67,24 @@
   "skills": "Node.js"
 }
 ```
+성공 응답 예시 
+```
+{
+    "status": "success",
+    "message": "채용공고 등록 완료",
+    "data": {
+        "id": 4,
+        "companyId": 1,
+        "position": "백엔드 ",
+        "reward": 1000000,
+        "description": "K",
+        "skills": "Python",
+        "updatedAt": "2024-08-11T07:31:58.802Z",
+        "createdAt": "2024-08-11T07:31:58.802Z"
+    }
+}
+```
+
 
 - **URL**: `PUT /jobs/:id`
 - **설명**: 기존의 채용 공고를 수정합니다.
@@ -86,6 +104,32 @@
   "skills": "Node.js, AWS"
 }`
 ```
+성공 응답 예시
+```
+{
+    "status": "success",
+    "message": "채용공고 수정 완료",
+    "data": {
+        "id": 4,
+        "position": "백엔드 개발자",
+        "reward": 1500000,
+        "skills": "Django",
+        "description": "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다. 합격입니다! ",
+        "companyId": 1,
+        "createdAt": "2024-08-11T07:31:58.802Z",
+        "updatedAt": "2024-08-11T07:34:56.753Z"
+    }
+}
+```
+
+실패 응답 예시
+```
+{
+    "message": "채용공고를 찾을 수 없습니다.",
+    "stack": "NotFoundError: 채용공고를 찾을 수 없습니다."
+}
+```
+
 - **URL**: `DELETE /jobs/:id`
 - **설명**: 특정 채용 공고를 삭제합니다.
 
@@ -96,6 +140,61 @@
 | Query Parameter | Type     | Description                               |
 |-----------------|----------|-------------------------------------------|
 | `search`        | `String` | 검색 키워드 (회사 이름, 포지션, 사용 기술) |
+
+성공 응답 예시
+```
+{
+    "status": "success",
+    "message": "채용공고 목록 조회 완료",
+    "data": [
+        {
+            "job_id": 4,
+            "company_name": "원티드랩",
+            "country": "한국",
+            "location": "서울",
+            "position": "백엔드 개발자",
+            "reward": 1500000,
+            "skills": "Django"
+        }
+    ]
+}
+```
+
+
+- **URL**: `GET /jobs/:id`
+- **설명**: 특정 채용 공고 상세 정보를 조회하고, 해당 회사의 다른 공고 id도 조회할 수 있습니다.
+
+성공 응답 예시
+```
+{
+    "status": "success",
+    "message": "채용공고 상세 페이지 조회 완료",
+    "data": {
+        "job_id": 4,
+        "company_name": "원티드랩",
+        "country": "한국",
+        "location": "서울",
+        "position": "백엔드 개발자",
+        "reward": 1500000,
+        "skills": "Django",
+        "description": "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다.",
+        "otherJobs": [
+            2,
+            3,
+            5,
+            6
+        ]
+    }
+}
+```
+
+실패 응답 예시
+```
+{
+    "message": "채용공고를 찾을 수 없습니다.",
+    "stack": "NotFoundError: 채용공고를 찾을 수 없습니다."
+}
+```
 
 ### 2. 공고 지원 API 
 - **URL**: `POST /applications/apply`
@@ -112,6 +211,41 @@
 {
   "jobId": 1, 
   "userId": 2 
+}
+```
+
+성공 응답 예시
+```
+{
+    "status": "success",
+    "message": "채용공고에 지원 완료",
+    "data": {
+        "id": 1,
+        "jobId": 2,
+        "userId": 1,
+        "updatedAt": "2024-08-11T07:36:31.928Z",
+        "createdAt": "2024-08-11T07:36:31.928Z"
+    }
+}
+```
+
+실패 응답 예시
+```
+{
+    "message": "채용공고를 찾을 수 없습니다.",
+    "stack": "NotFoundError: 채용공고를 찾을 수 없습니다."
+}
+```
+```
+{
+    "message": "이미 해당 채용공고에 지원하였습니다.",
+    "stack": "BadRequestError: 이미 해당 채용공고에 지원하였습니다."
+}
+```
+```
+{
+    "message": "사용자를 찾을 수 없습니다.",
+    "stack": "NotFoundError: 사용자를 찾을 수 없습니다."
 }
 ```
 
