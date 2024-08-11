@@ -1,5 +1,5 @@
 ## 채용 웹 서비스를 위한 API 서버
-*기술 스택 : Node.js, Express, SQLite*
+*기술 스택 : Node.js, Express, SQLite, Sequelize*
 - SQLite는 서버리스, 경량화, 간편한 설정으로 소규모 애플리케이션에 최적화된 RDBMS라 이를 선택했습니다.
 
 ### 기능 
