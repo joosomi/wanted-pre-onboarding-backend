@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import { createCompany } from '../controllers/Ccompany.js';
+
 const router = express.Router();
-const Ccompany = require('../controllers/Ccompany');
 
 // 회사 생성
-router.post('/', Ccompany.createCompany);
+router.post('/', createCompany);
 
-module.exports = router;
+export default router;

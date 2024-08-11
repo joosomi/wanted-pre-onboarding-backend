@@ -1,6 +1,6 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-const Company = require('./company');
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
+import Company from './company.js';
 
 class Job extends Model {}
 
@@ -40,4 +40,4 @@ Job.init(
 
 Job.belongsTo(Company, { foreignKey: 'companyId' });
 
-module.exports = Job;
+export default Job;

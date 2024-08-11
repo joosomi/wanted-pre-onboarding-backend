@@ -1,13 +1,14 @@
-const User = require('../models/user');
-const { sendCreatedResponse } = require('../utils/responseHandler');
+import User from '../models/user.js';
+import { sendCreatedResponse } from '../utils/responseHandler.js';
+import { BadRequestError } from '../middleware/errorHandler.js';
 
-exports.createUser = async (req, res, next) => {
+export const createUser = async (req, res, next) => {
     try {
         const { username, email } = req.body;
 
         // 이메일 중복 확인
         const existingUser = await User.findOne({
-            where: { email: email },
+            where: { email },
         });
 
         if (existingUser) {

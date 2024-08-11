@@ -1,9 +1,9 @@
-const request = require('supertest');
-const { app, startServer } = require('../app');
-const { sequelize } = require('../models');
-const User = require('../models/user');
-const Job = require('../models/job');
-const Company = require('../models/company');
+import request from 'supertest';
+import { app, startServer } from '../app.js';
+import { sequelize } from '../models';
+import User from '../models/user.js';
+import Job from '../models/job.js';
+import Company from '../models/company.js';
 
 let server;
 let company;
@@ -48,7 +48,7 @@ const applyToJob = async (jobId, userId) => {
     const res = await request(app)
         .post('/applications/apply')
         .send({ jobId, userId });
-    console.log('Response:', res.status, res.body); // 로깅 추가
+    // console.log('Response:', res.status, res.body); // 로깅 추가
     return res;
 };
 

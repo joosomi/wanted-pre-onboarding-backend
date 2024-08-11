@@ -1,9 +1,9 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
 
 class Company extends Model {}
 
-//회사 - 회사명, 국가, 지역
+// 회사 - 회사명, 국가, 지역
 Company.init(
     {
         name: {
@@ -26,4 +26,4 @@ Company.init(
     }
 );
 
-module.exports = Company;
+export default Company;

@@ -1,10 +1,10 @@
-const express = require('express');
-const companyRoutes = require('./routes/companyRoutes');
-const jobRoutes = require('./routes/jobRoutes');
-const applicationRoutes = require('./routes/applicationRoutes');
-const userRoutes = require('./routes/userRoutes');
-const { sequelize } = require('./models');
-const { errorHandler } = require('./middleware/errorHandler');
+import express from 'express';
+import companyRoutes from './routes/companyRoutes.js';
+import jobRoutes from './routes/jobRoutes.js';
+import applicationRoutes from './routes/applicationRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import { sequelize } from './models/index.js';
+import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
@@ -18,10 +18,9 @@ app.use('/users', userRoutes);
 
 app.use(errorHandler);
 
-const startServer = async () => {
+export const startServer = async () => {
     try {
         await sequelize.sync();
-        // await sequelize.sync({ force: true }); // 데이터베이스를 초기화 (모든 테이블 삭제 후 다시 생성)
         const port = process.env.PORT || 3000;
         const server = app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
@@ -33,8 +32,9 @@ const startServer = async () => {
     }
 };
 
-if (require.main === module) {
+// 직접 실행 여부 확인
+if (process.argv[1] === new URL(import.meta.url).pathname) {
     startServer();
 }
 
-module.exports = { app, startServer };
+export { app };

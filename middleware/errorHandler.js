@@ -32,9 +32,4 @@ const errorHandler = (err, req, res, next) => {
     });
 };
 
-module.exports = {
-    errorHandler,
-    NotFoundError,
-    BadRequestError,
-    InternalServerError,
-};
+export { errorHandler, NotFoundError, BadRequestError, InternalServerError };

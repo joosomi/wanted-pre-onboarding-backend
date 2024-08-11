@@ -1,20 +1,27 @@
-const express = require('express');
+import express from 'express';
+import {
+    getJobs,
+    getJobDetail,
+    createJob,
+    updateJob,
+    deleteJob,
+} from '../controllers/Cjob.js';
+
 const router = express.Router();
-const Cjob = require('../controllers/Cjob');
 
 // 모든 채용 공고 조회
-router.get('/', Cjob.getJobs);
+router.get('/', getJobs);
 
 // 채용 상세 페이지 조회
-router.get('/:id', Cjob.getJobDetail);
+router.get('/:id', getJobDetail);
 
-//채용 공고 생성
-router.post('/', Cjob.createJob);
+// 채용 공고 생성
+router.post('/', createJob);
 
 // 채용 공고 수정
-router.put('/:id', Cjob.updateJob);
+router.put('/:id', updateJob);
 
 // 채용 공고 삭제
-router.delete('/:id', Cjob.deleteJob);
+router.delete('/:id', deleteJob);
 
-module.exports = router;
+export default router;

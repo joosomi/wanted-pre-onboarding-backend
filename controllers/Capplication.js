@@ -1,13 +1,10 @@
-const Application = require('../models/application');
-const Job = require('../models/job');
-const User = require('../models/user');
-const { sendCreatedResponse } = require('../utils/responseHandler');
-const {
-    NotFoundError,
-    BadRequestError,
-} = require('../middleware/errorHandler');
+import Application from '../models/application.js';
+import Job from '../models/job.js';
+import User from '../models/user.js';
+import { sendCreatedResponse } from '../utils/responseHandler.js';
+import { NotFoundError, BadRequestError } from '../middleware/errorHandler.js';
 
-exports.applyToJob = async (req, res, next) => {
+export const applyToJob = async (req, res, next) => {
     try {
         const { jobId, userId } = req.body;
 

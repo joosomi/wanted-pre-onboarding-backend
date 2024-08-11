@@ -1,7 +1,7 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-const Job = require('./job');
-const User = require('./user');
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
+import Job from './job.js';
+import User from './user.js';
 
 class Application extends Model {}
 
@@ -37,4 +37,4 @@ Application.init(
     }
 );
 
-module.exports = Application;
+export default Application;

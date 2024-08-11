@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 
 // SQLite 데이터베이스 설정
 const sequelize = new Sequelize({
@@ -6,4 +6,4 @@ const sequelize = new Sequelize({
     storage: 'database.sqlite',
 });
 
-module.exports = sequelize;
+export default sequelize;

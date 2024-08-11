@@ -1,22 +1,22 @@
-const { Op } = require('sequelize');
-const Job = require('../models/job');
-const Company = require('../models/company');
-const {
+import { Op } from 'sequelize';
+import Job from '../models/job.js';
+import Company from '../models/company.js';
+import {
     sendSuccessResponse,
     sendCreatedResponse,
     sendNoContentResponse,
-} = require('../utils/responseHandler');
-const { NotFoundError } = require('../middleware/errorHandler');
+} from '../utils/responseHandler.js';
+import { NotFoundError } from '../middleware/errorHandler.js';
 
-exports.createJob = async (req, res) => {
+export const createJob = async (req, res, next) => {
     try {
         const { company_id, position, reward, description, skills } = req.body;
         const job = await Job.create({
             companyId: company_id,
-            position: position,
-            reward: reward,
-            description: description,
-            skills: skills,
+            position,
+            reward,
+            description,
+            skills,
         });
         sendCreatedResponse(res, job, '채용공고 등록 완료');
     } catch (error) {
@@ -24,7 +24,7 @@ exports.createJob = async (req, res) => {
     }
 };
 
-exports.updateJob = async (req, res, next) => {
+export const updateJob = async (req, res, next) => {
     try {
         const { position, reward, description, skills } = req.body;
         const job = await Job.findByPk(req.params.id);
@@ -47,7 +47,7 @@ exports.updateJob = async (req, res, next) => {
     }
 };
 
-exports.deleteJob = async (req, res, next) => {
+export const deleteJob = async (req, res, next) => {
     try {
         const job = await Job.findByPk(req.params.id);
 
@@ -62,13 +62,13 @@ exports.deleteJob = async (req, res, next) => {
     }
 };
 
-exports.getJobs = async (req, res, next) => {
+export const getJobs = async (req, res, next) => {
     try {
         // 검색 - 쿼리 파라미터 가져오기
         const { search } = req.query;
 
         // 검색 옵션
-        let searchOptions = {
+        const searchOptions = {
             include: [
                 {
                     model: Company,
@@ -124,7 +124,7 @@ exports.getJobs = async (req, res, next) => {
 };
 
 // 채용 상세 페이지 조회
-exports.getJobDetail = async (req, res, next) => {
+export const getJobDetail = async (req, res, next) => {
     try {
         const jobId = req.params.id;
 

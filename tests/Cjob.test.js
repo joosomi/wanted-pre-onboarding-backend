@@ -1,8 +1,8 @@
-const request = require('supertest');
-const { app, startServer } = require('../app');
-const { sequelize } = require('../models');
-const Job = require('../models/job');
-const Company = require('../models/company');
+import request from 'supertest';
+import { app, startServer } from '../app.js';
+import { sequelize } from '../models';
+import Job from '../models/job.js';
+import Company from '../models/company.js';
 
 let server;
 

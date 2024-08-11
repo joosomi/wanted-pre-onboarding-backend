@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import { applyToJob } from '../controllers/Capplication.js';
+
 const router = express.Router();
-const Capplication = require('../controllers/Capplication');
 
 // 공고 지원
-router.post('/apply', Capplication.applyToJob);
+router.post('/apply', applyToJob);
 
-module.exports = router;
+export default router;

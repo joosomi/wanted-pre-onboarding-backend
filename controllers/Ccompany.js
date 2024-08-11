@@ -1,7 +1,7 @@
-const Company = require('../models/company');
-const { sendCreatedResponse } = require('../utils/responseHandler');
+import Company from '../models/company.js';
+import { sendCreatedResponse } from '../utils/responseHandler.js';
 
-exports.createCompany = async (req, res, next) => {
+export const createCompany = async (req, res, next) => {
     try {
         const company = await Company.create(req.body);
         sendCreatedResponse(res, company, '회사 등록 완료');
