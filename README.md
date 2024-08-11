@@ -160,6 +160,42 @@
 }
 ```
 
+
+- **URL**: `GET /jobs/:id`
+- **설명**: 특정 채용 공고 상세 정보를 조회하고, 해당 회사의 다른 공고 id도 조회할 수 있습니다.
+
+성공 응답 예시
+```
+{
+    "status": "success",
+    "message": "채용공고 상세 페이지 조회 완료",
+    "data": {
+        "job_id": 4,
+        "company_name": "원티드랩",
+        "country": "한국",
+        "location": "서울",
+        "position": "백엔드 개발자",
+        "reward": 1500000,
+        "skills": "Django",
+        "description": "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다.",
+        "otherJobs": [
+            2,
+            3,
+            5,
+            6
+        ]
+    }
+}
+```
+
+실패 응답 예시
+```
+{
+    "message": "채용공고를 찾을 수 없습니다.",
+    "stack": "NotFoundError: 채용공고를 찾을 수 없습니다."
+}
+```
+
 ### 2. 공고 지원 API 
 - **URL**: `POST /applications/apply`
 - **설명**: 사용자가 특정 채용 공고에 지원합니다.
@@ -198,6 +234,18 @@
 {
     "message": "채용공고를 찾을 수 없습니다.",
     "stack": "NotFoundError: 채용공고를 찾을 수 없습니다."
+}
+```
+```
+{
+    "message": "이미 해당 채용공고에 지원하였습니다.",
+    "stack": "BadRequestError: 이미 해당 채용공고에 지원하였습니다."
+}
+```
+```
+{
+    "message": "사용자를 찾을 수 없습니다.",
+    "stack": "NotFoundError: 사용자를 찾을 수 없습니다."
 }
 ```
 
