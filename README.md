@@ -21,16 +21,75 @@
 ---
 
 ### 주요 API 명세 
-1. 채용 공고 등록
+## 1. 채용공고 API
+- **URL**: `POST /jobs`
+- **설명**: 새로운 채용 공고를 등록합니다.
+
+```
+{
+  "company_id": 1,
+  "position": "백엔드 개발자",
+  "reward": 1000000,
+  "description": "백엔드 개발자를 모집합니다.",
+  "skills": "Node.js"
+}
+```
+
+- **URL**: `PUT /jobs/:id`
+- **설명**: 기존의 채용 공고를 수정합니다.
+
+```
+{
+  "position": "백엔드 시니어 개발자",
+  "reward": 1500000,
+  "description": "백엔드 시니어 개발자를 모집합니다.",
+  "skills": "Node.js, AWS"
+}`
+```
+- **URL**: `DELETE /jobs/:id`
+- **설명**: 특정 채용 공고를 삭제합니다.
+
+- **URL**: `GET /jobs`
+- 검색 시 : `/jobs?search=백엔드`
+- **설명**: 등록된 모든 채용 공고 목록을 조회하며, 검색이 가능합니다.
 
 
+## 2. 공고 지원 API 
+- **URL**: `POST /applications/apply`
+- **설명**: 사용자가 특정 채용 공고에 지원합니다.
 
-### 프로젝트 구조 
-- config
-- models
-- routes
-- utils
-- tests
-- controllers
-- middleware
-- app.js
+
+```json
+{
+  "jobId": 1, 
+  "userId": 2 
+}
+```
+
+---
+
+
+### 프로젝트 디렉토리 구조 
+```plaintext
+├── config           # 데이터베이스 설정 파일들
+├── models           # Sequelize 모델 정의
+├── routes           # API 라우트 정의
+├── utils            # 유틸리티 함수 (예: responseHandler)
+├── tests            # 테스트 코드
+├── controllers      # 비즈니스 로직이 포함된 컨트롤러
+├── middleware       # 미들웨어 (예: errorHandler)
+└── app.js           # Express 앱 초기화 및 설정
+```
+
+---
+
+## 프로젝트 설치 및 실행 방법
+```
+# 1. 패키지 설치
+npm install
+
+# 2. 시작
+node app.js
+
+# 3. 테스트 코드 실행
+npm test 
